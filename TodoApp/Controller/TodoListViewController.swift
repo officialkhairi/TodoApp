@@ -12,27 +12,12 @@ class TodoListViewController: UITableViewController {
     
     var itemArray = [Item]()
     
-    let defaults = UserDefaults.standard
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
         
-        let newItem = Item()
-        newItem.title = "One"
-        itemArray.append(newItem)
-        
-        let newItem2 = Item()
-        newItem2.title = "One121"
-        itemArray.append(newItem2)
-        
-        let newItem3 = Item()
-        newItem3.title = "One213123"
-        itemArray.append(newItem3)
-        
-        if let arrays = defaults.array(forKey: "TodoListArray") as? [Item] {
-            itemArray = arrays
-        }
     }
     
     //MARK:- Data source methods
@@ -42,22 +27,15 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
-        
         let item = itemArray[indexPath.row]
-        
         cell.textLabel?.text = item.title
-        
         cell.accessoryType = item.done ? .checkmark : .none
-        
         return cell
     }
     //MARK:- TableView Delegate methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
-        
         tableView.reloadData()
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -72,15 +50,13 @@ class TodoListViewController: UITableViewController {
         
         let action = UIAlertAction(title: "Add item", style: .default) { (action) in
             // WHAT WILL happen when the user clicks add item
-
-            let newItem = Item()
+            
+            let newItem = Item(context: self.context)
             newItem.title = textField.text!
+            newItem.done = false
             
             self.itemArray.append(newItem)
-            
-            self.defaults.set(self.itemArray, forKey: "TodoListArray")
-            
-            self.tableView.reloadData()
+            self.saveItems()
         }
         
         alert.addTextField { (alertTextField) in
@@ -92,6 +68,18 @@ class TodoListViewController: UITableViewController {
         
         present(alert, animated: true, completion: nil)
         
+    }
+    
+    //MARK:- Model Manupulation Methods
+    
+    func saveItems() {
+        do {
+            try context.save()
+        } catch {
+            print("Error saving contex, \(error)")
+        }
+        
+        self.tableView.reloadData()
     }
     
 }
