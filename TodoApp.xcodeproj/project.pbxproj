@@ -65,6 +65,7 @@
 				EF13460424ADAAA500E83E4C /* Model */,
 				EF13460524ADAAC900E83E4C /* View */,
 				EF13460624ADAAD600E83E4C /* Controller */,
+				EFEC310F24B1E4ED00C3BD13 /* Supporting files */,
 				EF1345FC24A9CDDC00E83E4C /* Info.plist */,
 			);
 			path = TodoApp;
@@ -82,8 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				EF1345F424A9CDD900E83E4C /* Main.storyboard */,
-				EF1345F724A9CDDC00E83E4C /* Assets.xcassets */,
-				EF1345F924A9CDDC00E83E4C /* LaunchScreen.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -95,6 +94,15 @@
 				EF13460224A9D1EC00E83E4C /* TodoListViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		EFEC310F24B1E4ED00C3BD13 /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				EF1345F724A9CDDC00E83E4C /* Assets.xcassets */,
+				EF1345F924A9CDDC00E83E4C /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
